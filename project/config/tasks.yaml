@@ -83,46 +83,55 @@ destination_task:
     you found.
 
 itinerary_task:
-  # TODO: Student Code Here
-  # Write the instructions for the Local Guide. It should:
-  #   1. Reference {selected_bases}, {trip_length_days}, and {expectations}
-  #   2. Ask for a DAY-BY-DAY plan (morning / afternoon / evening) that
-  #      follows the route order and covers SEVERAL specific spots per day
-  #   3. Require an APPROXIMATE travel time for every move -- between
-  #      bases (e.g. "Manali -> Kasol: local bus, ~3.5 hr") AND between
-  #      spots inside a city (e.g. "~20 min auto")
-  #   4. Encourage using the web search tool for at least one real,
-  #      current recommendation (a specific restaurant, market, trek
-  #      route, or event)
-  description: "TODO: Student Code Here -- write the Local Guide's task description. See the comment above for the 4 things it must cover."
-  # TODO: Student Code Here
-  # Describe the exact shape you want back, e.g.:
-  # "A markdown itinerary with one heading per day (Day 1, Day 2, ...)
-  #  that names which base the traveler wakes up in, and 3 bullet points
-  #  per day (Morning / Afternoon / Evening), each with specific spots
-  #  and approximate travel times."
-  expected_output: "TODO: Student Code Here -- describe the exact format you want the itinerary in."
+  description: >
+    Create a day-by-day itinerary for a {trip_length_days}-day trip along
+    this route: {selected_bases}. The traveler's expectations: {expectations}.
+
+    Follow the route order. Cover every day with a morning, afternoon, and
+    evening plan, with SEVERAL specific spots per day -- and include an
+    APPROXIMATE travel time for every move: between bases (e.g. "Manali ->
+    Kasol: local bus, ~3.5 hr") and between spots within a city (e.g.
+    "~20 min auto from the old town"). Don't pad with generic sightseeing;
+    make every pick genuinely reflect the expectations. Use the web search
+    tool to find at least ONE real, current recommendation -- a specific
+    restaurant, market, trek route, or event -- and include it by name.
+
+  expected_output: >
+    A markdown itinerary with one heading per day (Day 1, Day 2, ...) that
+    names which base the traveler wakes up in, and 3 bullet points per day
+    labeled Morning / Afternoon / Evening, each naming specific spots WITH
+    approximate travel times. Show hops between bases as their own line
+    with transport mode and duration. Include the real, searched
+    recommendation by name somewhere in the plan.
 
 budget_task:
-  # TODO: Student Code Here
-  # Write the instructions for the Travel Concierge. It should:
-  #   1. Reference the itinerary: {itinerary}
-  #   2. Reference {trip_length_days}, {budget_inr}, and {selected_bases}
-  #      (assume ONE traveler unless the itinerary says otherwise)
-  #   3. Tell the agent that any price it finds in a FOREIGN currency must
-  #      be converted to INR with the Currency Converter tool first --
-  #      no mental math on exchange rates
-  #   4. Explicitly tell the agent to CALL the Expense Calculator tool
-  #      with its best INR estimates for travel fare/stay/food/activities,
-  #      including the hops BETWEEN bases as intercity_transport_total
-  #      (it can use general knowledge of {selected_bases}, or search for
-  #      real numbers)
-  #   5. Ask it to combine the tool's output with the itinerary into ONE
-  #      final, traveler-ready document
-  description: "TODO: Student Code Here -- write the Travel Concierge's task description. See the comment above for the 5 things it must cover."
-  # TODO: Student Code Here
-  # Hint: your Python code needs the total cost to be machine-readable
-  # later, so REQUIRE a specific line such as:
-  #   "TOTAL_COST_INR: <number>"   (no currency symbol, no commas)
-  # somewhere in the output, in addition to the human-readable plan.
-  expected_output: "TODO: Student Code Here -- describe the required output format, including a machine-readable TOTAL_COST_INR line (see comment above)."
+  description: >
+    Here is the traveler's itinerary along the route {selected_bases}:
+
+    {itinerary}
+
+    Build the final costed plan for this {trip_length_days}-day trip. Assume
+    ONE traveler unless the itinerary says otherwise. The traveler's total
+    budget is Rs. {budget_inr} (INR).
+
+    Estimate realistic INR costs for: round-trip travel fare from home to
+    the route's first base and back from its last (flight/train/bus --
+    whichever fits), the hops BETWEEN bases from the itinerary (pass their
+    total as intercity_transport_total), stay per night, food per day,
+    activities total, and local transport per day. You may use general
+    knowledge or the web search tool for real numbers. If ANY price you
+    find is in a foreign currency, convert it to INR with the Currency
+    Converter tool first -- never convert in your head.
+
+    Then CALL the Expense Calculator tool with your INR estimates to get a
+    trustworthy grand total. Finally, combine the itinerary and the cost
+    breakdown into ONE polished, traveler-ready document.
+
+  expected_output: >
+    A traveler-ready markdown document containing:
+    (1) the day-by-day itinerary with travel times,
+    (2) an itemized cost breakdown from the Expense Calculator,
+    and
+    (3) as the very LAST line, exactly:
+    "TOTAL_COST_INR: <number>"
+    -- no currency symbol, no commas.

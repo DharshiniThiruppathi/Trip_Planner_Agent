@@ -421,19 +421,12 @@ def route_after_reality_check(state: TripState) -> Literal["advise", "plan"]:
 
 def route_after_budget_check(state: TripState) -> Literal["revise", "end"]:
     # TODO: Student Code Here
-    # Return "revise" if the plan is OVER budget AND we haven't hit
-    # MAX_REVISIONS yet. Otherwise return "end".
-    #
-    # You have access to:
-    #   state["estimated_total_cost_inr"]  (float)
-    #   state["budget_inr"]                (float)
-    #   state["revision_count"]            (int)
-    #   MAX_REVISIONS                      (module-level constant, defined above)
-    #
-    # Look at route_after_reality_check above for the pattern. Replace the
-    # line below with your real condition. A router function should ONLY
-    # read state and return a string -- never call an LLM or do heavy
-    # computation here; that belongs in a node.
+  
+    if (
+        state["estimated_total_cost_inr"] > state["budget_inr"]
+        and state["revision_count"] < MAX_REVISIONS
+    ):
+        return "revise"
     return "end"
 
 
